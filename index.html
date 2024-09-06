@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QR Code Generator</title>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; padding: 50px; }
+        textarea { padding: 10px; width: 300px; height: 100px; margin-bottom: 20px; }
+        button { padding: 10px 20px; }
+        img { margin-top: 20px; }
+    </style>
+</head>
+<body>
+    <h1>QR Code Generator</h1>
+    <textarea id="textInput">hello</textarea>
+    <br>
+    <button onclick="generateQRCode()">Generate QR Code</button>
+    <br>
+    <img id="qrImage" alt="QR Code will appear here" />
+
+    <script>
+        window.onload = function() {
+            // Generate the default QR code for the initial "hello" text
+            generateQRCode();
+        };
+
+        function generateQRCode() {
+            var text = document.getElementById('textInput').value;
+            var qrImage = document.getElementById('qrImage');
+
+            if (text.trim() === '') {
+                alert('Please enter text');
+                return;
+            }
+
+            var xhr = new XMLHttpRequest();
+            
+            // Use relative path so the requests respect the base path (e.g., /myqr)
+            xhr.open('POST', '', true); // empty string to make the request relative to the current path
+            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+            xhr.responseType = 'blob';
+
+            xhr.onload = function () {
+                if (xhr.status === 200) {
+                    var imgURL = URL.createObjectURL(xhr.response);
+                    qrImage.src = imgURL;
+                } else {
+                    alert('Failed to generate QR code');
+                }
+            };
+
+            xhr.send('text=' + encodeURIComponent(text));
+        }
+    </script>
+</body>
+</html>
