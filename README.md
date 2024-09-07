@@ -11,7 +11,8 @@ run on windows or linux as usual
 
 docker setup has not been tested at all, but it should look something like this
 
-1) git clone  [https://github.com/ljubomirb/go-qr-web](https://github.com/ljubomirb/go-qr-web)
+1) get this copy
+> git clone  [https://github.com/ljubomirb/go-qr-web](https://github.com/ljubomirb/go-qr-web)
 2)  Build the Docker Image: In the same directory as the Dockerfile, run the following command:
 > docker build -t go-qr-web .
 3) Run the Docker Container: After building the image, you can run the container with the following command:
