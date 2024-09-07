@@ -1,4 +1,4 @@
-module go-qr-web
+module github.com/ljubomirb/qrcode-generator
 
 go 1.20
 
