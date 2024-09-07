@@ -1,4 +1,4 @@
-module myqr
+module go-qr-web
 
 go 1.20
 
