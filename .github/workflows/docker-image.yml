@@ -11,21 +11,24 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    # Check out the repository code
-    - uses: actions/checkout@v4
+      - uses: actions/checkout@v4
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+      - name: Cache Docker layers
+        uses: actions/cache@v3
+        with:
+          path: /tmp/.buildx-cache
+          key: ${{ runner.os }}-buildx-${{ github.sha }}
+          restore-keys: |
+            ${{ runner.os }}-buildx-
+      - name: Log in to GitHub Container Registry
+        uses: docker/login-action@v2
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GHCR_PAT }}
+      - name: Build and push Docker image
+        run: |
+          docker build . --file Dockerfile --tag ghcr.io/${{ github.repository }}/go-qr-web:latest
+          docker push ghcr.io/${{ github.repository }}/go-qr-web:latest
 
-    # Set up Docker Buildx (for advanced Docker build features)
-    - name: Set up Docker Buildx
-      uses: docker/setup-buildx-action@v2
-
-    # Log in to GHCR using Personal Access Token (PAT)
-    - name: Log in to GitHub Container Registry
-      run: echo "${{ secrets.GHCR_PAT }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
-
-    # Build the Docker image and tag it with the current date
-    - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag ghcr.io/${{ github.repository }}/go-qr-web:latest
-
-    # Push the Docker image to GHCR
-    - name: Push to GitHub Container Registry
-      run: docker push ghcr.io/${{ github.repository }}/go-qr-web:latest
