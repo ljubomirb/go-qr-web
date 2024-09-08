@@ -20,7 +20,7 @@ jobs:
 
     # Log in to GHCR using Personal Access Token (PAT)
     - name: Log in to GitHub Container Registry
-      run: echo "${{ secrets.fine_token }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+      run: echo "${{ secrets.GHCR_PAT }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
 
     # Build the Docker image and tag it with the current date
     - name: Build the Docker image
