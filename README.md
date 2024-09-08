@@ -9,6 +9,11 @@ Style index.html whatever you like, put it in the same folder as main app.
 
 run on windows or linux as usual
 
+## run docker image
+You can run this image on port 8005 (or choose your port)
+> docker run -d -p 8005:8005 ghcr.io/ljubomirb/go-qr-web:latest
+
+## build image
 docker setup has not been tested at all, but it should look something like this
 
 1) get this copy
